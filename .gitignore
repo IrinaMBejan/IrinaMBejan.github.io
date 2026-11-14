@@ -1,0 +1,10 @@
+.claude/
+.superpowers/
+.DS_Store
+
+# unused source assets
+index-old.html
+limbo-bar.png
+michael-time.png
+mitt-cut.png
+ticket-cut.png
