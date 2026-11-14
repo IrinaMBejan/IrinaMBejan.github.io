@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Irina Bejan — building AI that spreads power</title>
+<title>Irina Bejan</title>
 <meta name="description" content="Irina Bejan builds products that make AI more capable when more people participate. She leads ScreamingFace at OpenMined, and previously worked at Google. Interested in attribution-based control, multi-model AI systems, and AI oversight.">
 <meta name="author" content="Irina Bejan">
 <meta name="robots" content="index, follow">
@@ -254,14 +254,19 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
 .birdflock { transform-origin: 50% 90%; }
 @keyframes bird-shuffle {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  12%      { transform: translateY(-4px) rotate(-2deg); }
-  24%      { transform: translateY(0) rotate(0deg); }
-  36%      { transform: translateY(-3px) rotate(1.5deg); }
+  8%       { transform: translateY(-4px) rotate(-2deg); }
+  16%      { transform: translateY(0) rotate(0deg); }
+  24%      { transform: translateY(-3px) rotate(1.5deg); }
+  32%      { transform: translateY(0) rotate(0deg); }
+  40%      { transform: translateY(-2px) rotate(-1deg); }
   48%      { transform: translateY(0) rotate(0deg); }
-  60%      { transform: translateY(-2px) rotate(-1deg); }
-  72%      { transform: translateY(0) rotate(0deg); }
+  56%      { transform: translateY(-4px) rotate(2deg); }
+  64%      { transform: translateY(0) rotate(0deg); }
+  72%      { transform: translateY(-3px) rotate(-1.5deg); }
+  80%      { transform: translateY(0) rotate(0deg); }
+  88%      { transform: translateY(-2px) rotate(1deg); }
 }
-.birdflock { animation: bird-shuffle 2.6s ease-in-out 3s 1; }
+.birdflock { animation: bird-shuffle 5.2s ease-in-out 3s 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .gem svg, .contact a.button, .video a svg { transition: none; }
