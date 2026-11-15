@@ -93,6 +93,7 @@ svg { display: block; }
   width: 100%; height: clamp(230px, 26vw, 400px);
 }
 main, .sky, .intro-wrap { position: relative; }
+main { z-index: 2; }
 /* Keep page content (and any card that opens near the bottom) above the footer. */
 main { z-index: 1; }
 footer { z-index: 0; }
@@ -157,6 +158,7 @@ h3 {
 
 /* a wire that crosses the page between two sections */
 .span { position: relative; height: 130px; margin-top: clamp(36px, 5vw, 60px); }
+.span:has(.gem[aria-expanded="true"]) { z-index: 10; }
 .span .arm { top: 56px; }
 .span .wire, .span .wire-out { top: 60px; }
 /* the birds' wire sits higher, leaving clear space above "About" */
@@ -205,6 +207,14 @@ h3 {
 .card img { display: block; width: 100%; height: auto; }
 .card .photo { aspect-ratio: 1 / 1; object-fit: cover; }
 .card-bare { padding: 8px; }
+.card a.cta {
+  display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: 10px; padding: 0 16px;
+  background: var(--accent); color: var(--ink);
+  border: 2px solid var(--ink); border-radius: 2px;
+  font-size: 16px; font-weight: 600; text-decoration: none;
+}
+.card a.cta:hover { background: #ff7140; }
+.card > .card-title:first-child { margin-top: 0; }
 
 .video { position: relative; aspect-ratio: 16 / 9; background: var(--ink); overflow: hidden; }
 .video a { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
@@ -672,6 +682,22 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
         </div>
       </div>
     </div>
+    <div class="hang" style="right: calc(var(--stage) * 0.70)">
+      <button class="gem" type="button" aria-label="Grab a coffee with Irina" aria-expanded="false" aria-controls="card-coffee" style="width: 44px; height: 56px">
+        <svg aria-hidden="true" viewBox="0 0 44 56" style="width: 44px; height: 56px">
+<path d="M11 18 H33 L30.5 48 Q30.3 50 28.3 50 H15.7 Q13.7 50 13.5 48 Z" fill="#ffffff" stroke="#171b1f" stroke-width="2.4" stroke-linejoin="round"></path>
+<path d="M11.7 26 H32.3 L31.2 40 H12.8 Z" fill="#ff5a1f" stroke="#171b1f" stroke-width="2" stroke-linejoin="round"></path>
+<ellipse cx="22" cy="33" rx="3.1" ry="4.3" fill="#ffc83d" stroke="#171b1f" stroke-width="1.4" transform="rotate(24 22 33)"></ellipse>
+<path d="M20.6 29.6 Q23.4 33 21.6 36.6" stroke="#171b1f" stroke-width="1.2" stroke-linecap="round" fill="none"></path>
+<rect x="8.5" y="11" width="27" height="7.5" rx="2.6" fill="#ffffff" stroke="#171b1f" stroke-width="2.4"></rect>
+<rect x="19" y="-3" width="6" height="15" rx="1.5" fill="#d9b382" stroke="#171b1f" stroke-width="2"></rect>
+        </svg>
+      </button>
+      <div class="card" id="card-coffee" hidden style="top: 62px; left: 0; width: 232px">
+        <div class="card-title">Grab a coffee with Irina</div>
+        <a class="cta" href="https://x.com/IrinaMBejan" target="_blank" rel="noopener noreferrer" data-copy="Let’s grab a coffee!">Copy and X DM →</a>
+      </div>
+    </div>
     <div class="on-wire" style="bottom: -1px; right: calc(var(--stage) * 0.48); width: 100px; height: 83px">
       <button class="gem" type="button" aria-label="The only time I set the bar low is for limbo" aria-expanded="false" aria-controls="card-walker" style="width: 100px; height: 83px">
         <svg aria-hidden="true" viewBox="0 0 120 100" style="width: 100px; height: 83px; transform-origin: 50% 100%; transform: rotate(2deg)">
@@ -694,7 +720,6 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
       </button>
       <div class="card card-bare" id="card-walker" hidden style="top: 90px; left: 0; width: clamp(300px, 42vw, 440px); transform-origin: 0 0; --tilt: -1.5deg">
         <img src="limbo-bar.gif" alt="Dwight and Michael from The Office; the caption reads: The only time I set the bar low is for limbo">
-        <p style="margin-top: 8px; font-size: 14px; line-height: 1.4;">I also love a well-made product that’s easy to use!</p>
       </div>
     </div>
   </div>
@@ -765,6 +790,24 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
   window.addEventListener('resize', () => gems.filter(isOpen).forEach((gem) => nudge(cardOf(gem))));
 
   // The video thumbnails open YouTube in a new tab (their links are target="_blank").
+
+  // "Copy and DM": put the message on the clipboard; the link itself then opens X in a new tab.
+  const copyText = (text) => {
+    const field = document.createElement('textarea');
+    field.value = text;
+    field.setAttribute('readonly', '');
+    field.style.cssText = 'position: fixed; top: 0; left: 0; opacity: 0';
+    document.body.appendChild(field);
+    field.select();
+    let copied = false;
+    try { copied = document.execCommand('copy'); } catch (error) { copied = false; }
+    field.remove();
+    if (copied || !navigator.clipboard) return Promise.resolve(copied);
+    return navigator.clipboard.writeText(text).then(() => true, () => false);
+  };
+  document.querySelectorAll('a[data-copy]').forEach((link) => {
+    link.addEventListener('click', () => { copyText(link.dataset.copy); });
+  });
 })();
 </script>
 </body>
