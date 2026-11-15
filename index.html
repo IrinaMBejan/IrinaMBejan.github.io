@@ -655,7 +655,7 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
   </div>
 </section>
 
-<!-- Wire 4: the oven mitt and the limbo guy with the bar -->
+<!-- Wire 4: the coffee cup and the limbo guy with the bar -->
 <div class="span" style="--a: 1.5deg">
   <svg class="arm" aria-hidden="true" viewBox="0 0 150 40">
 <path d="M75 40 L40 27 M75 40 L110 27" stroke="#4a4f54" stroke-width="2.5" fill="none"></path>
@@ -664,24 +664,6 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
 <path d="M9.5 8.5 H20.5 M9.5 13 H20.5 M9.5 17.5 H20.5 M129.5 8.5 H140.5 M129.5 13 H140.5 M129.5 17.5 H140.5" stroke="#ff5a1f" stroke-width="3.2" stroke-linecap="round" fill="none"></path>
   </svg>
   <div class="wire">
-    <div class="hang out-right" style="right: calc(var(--stage) * 0.24)">
-      <button class="gem" type="button" aria-label="An absolute favourite" aria-expanded="false" aria-controls="card-fave" style="width: 44px; height: 56px">
-        <svg aria-hidden="true" viewBox="0 0 44 56" style="width: 44px; height: 56px">
-<path d="M13 10 H31 V38 C31 50 13 50 13 38 V33 C5 35 3 24 13 23 Z" fill="#ff5a1f" stroke="#171b1f" stroke-width="2.4" stroke-linejoin="round"></path>
-<path d="M13 10 H31 V18 H13 Z" fill="#ffc83d" stroke="#171b1f" stroke-width="2.4" stroke-linejoin="round"></path>
-<rect x="19" y="-3" width="6" height="15" rx="1.5" fill="#d9b382" stroke="#171b1f" stroke-width="2"></rect>
-        </svg>
-      </button>
-      <div class="card" id="card-fave" hidden style="top: 62px; right: 0">
-        <div class="card-label">An absolute favourite</div>
-        <div class="video" data-video="nbYB4Udl9TQ" data-title="An absolute favourite">
-          <a href="https://www.youtube.com/watch?v=nbYB4Udl9TQ" target="_blank" rel="noopener noreferrer" aria-label="An absolute favourite: play the video">
-            <img src="https://i.ytimg.com/vi/nbYB4Udl9TQ/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()">
-            <svg aria-hidden="true" viewBox="0 0 48 48"><circle cx="24" cy="24" r="22" fill="#ffffff"></circle><path d="M19 15 L35 24 L19 33 Z" fill="#171b1f"></path></svg>
-          </a>
-        </div>
-      </div>
-    </div>
     <div class="hang" style="right: calc(var(--stage) * 0.70)">
       <button class="gem" type="button" aria-label="Grab a coffee with Irina" aria-expanded="false" aria-controls="card-coffee" style="width: 44px; height: 56px">
         <svg aria-hidden="true" viewBox="0 0 44 56" style="width: 44px; height: 56px">
@@ -695,7 +677,7 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
       </button>
       <div class="card" id="card-coffee" hidden style="top: 62px; left: 0; width: 232px">
         <div class="card-title">Grab a coffee with Irina</div>
-        <a class="cta" href="https://x.com/IrinaMBejan" target="_blank" rel="noopener noreferrer" data-copy="Let’s grab a coffee!">Copy and X DM →</a>
+        <a class="cta" href="https://x.com/messages/compose?recipient_id=903593736&text=Let%E2%80%99s%20grab%20a%20coffee%21" target="_blank" rel="noopener noreferrer">DM me on X →</a>
       </div>
     </div>
     <div class="on-wire" style="bottom: -1px; right: calc(var(--stage) * 0.48); width: 100px; height: 83px">
@@ -814,24 +796,6 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
   window.addEventListener('resize', () => gems.filter(isOpen).forEach((gem) => nudge(cardOf(gem))));
 
   // The video thumbnails open YouTube in a new tab (their links are target="_blank").
-
-  // "Copy and DM": put the message on the clipboard; the link itself then opens X in a new tab.
-  const copyText = (text) => {
-    const field = document.createElement('textarea');
-    field.value = text;
-    field.setAttribute('readonly', '');
-    field.style.cssText = 'position: fixed; top: 0; left: 0; opacity: 0';
-    document.body.appendChild(field);
-    field.select();
-    let copied = false;
-    try { copied = document.execCommand('copy'); } catch (error) { copied = false; }
-    field.remove();
-    if (copied || !navigator.clipboard) return Promise.resolve(copied);
-    return navigator.clipboard.writeText(text).then(() => true, () => false);
-  };
-  document.querySelectorAll('a[data-copy]').forEach((link) => {
-    link.addEventListener('click', () => { copyText(link.dataset.copy); });
-  });
 })();
 </script>
 </body>
