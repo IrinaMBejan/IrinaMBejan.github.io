@@ -740,6 +740,29 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
   const cardOf = (gem) => document.getElementById(gem.getAttribute('aria-controls'));
   const isOpen = (gem) => gem.getAttribute('aria-expanded') === 'true';
 
+  // A short, soft "click" synthesized on the fly — no audio file to load.
+  let audioCtx;
+  const playClick = () => {
+    try {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      audioCtx = audioCtx || new Ctx();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(880, now);
+      osc.frequency.exponentialRampToValueAtTime(320, now + 0.05);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(0.1, now + 0.004);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.09);
+    } catch (e) { /* audio unavailable — stay silent */ }
+  };
+
   // Keep an open card inside the window on narrow screens.
   const nudge = (card) => {
     card.style.setProperty('--nudge', '0px');
@@ -773,6 +796,7 @@ footer { position: relative; padding: clamp(8px, 2vw, 24px) var(--right) clamp(1
   gems.forEach((gem) => {
     gem.addEventListener('click', (event) => {
       event.stopPropagation();
+      playClick();
       isOpen(gem) ? close(gem) : open(gem);
     });
   });
